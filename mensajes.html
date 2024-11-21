@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mensajes - T-Eat</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+        }
+        .sidebar {
+            width: 200px;
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            height: 100vh;
+            position: fixed;
+        }
+        .sidebar .logo img {
+            max-width: 100%;
+        }
+        .sidebar .time {
+            font-size: 24px;
+            font-family: 'Arial', sans-serif;
+            margin: 20px 0;
+        }
+        .sidebar .menu {
+            list-style: none;
+            padding: 0;
+        }
+        .sidebar .menu li {
+            margin: 10px 0;
+        }
+        .sidebar .menu a {
+            color: #fff;
+            text-decoration: none;
+        }
+        .sidebar .menu a.active {
+            font-weight: bold;
+        }
+        .content {
+            margin-left: 220px;
+            padding: 20px;
+            flex-grow: 1;
+        }
+        .message-container {
+            background-color: #000; /* Fondo negro */
+            border-radius: 10px; /* Ajuste de bordes */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            padding: 20px;
+            margin: 20px auto;
+            color: #fff; /* Texto blanco */
+        }
+        .message-header {
+            background-color: #fff; /* Fondo blanco */
+            color: #000; /* Texto negro */
+            padding: 10px;
+            border-radius: 10px 10px 0 0; /* Ajuste de bordes */
+            text-align: center;
+            font-size: 18px;
+        }
+        .message-body {
+            padding: 25px;
+        }
+        .message-body input, .message-body textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            color: #000; /* Texto negro */
+        }
+        .message-body textarea {
+            height: 150px;
+        }
+        .message-footer {
+            text-align: right;
+        }
+        .message-footer button {
+            background-color: #fff; /* Botón blanco */
+            color: #000; /* Texto negro */
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: 10px; /* Separación entre botones */
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo">
+            <img src="logo.png" alt="Logo">
+        </div>
+        <div class="time" id="currentTime">00:00</div> <!-- Hora -->
+        <ul class="menu">
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="Redes.html">Redes</a></li>
+            <li class="active"><a href="mensajes.html">Mensajes</a></li>
+            <li><a href="suscribirse.html">Suscribirse a T-Eat</a></li>
+        </ul>
+    </div>
+    <div class="content">
+        <h2>Mensajes</h2>
+        <div class="message-container">
+            <div class="message-header">
+                Pedido
+            </div>
+            <div class="message-body">
+                <input type="text" placeholder="Nombre y Carrera :" id="from">
+                <input type="text" placeholder="Lugar de Entrega" id="subject">
+                <textarea placeholder="Ingresa tu Pedido Aqui" id="orderDetails"></textarea>
+            </div>
+            <div class="message-footer">
+                <button onclick="sendMessage()">Enviar Pedido</button>
+                <button onclick="nuevoPedido()">Nuevo Pedido</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            // Cargar datos almacenados
+            document.getElementById('from').value = localStorage.getItem('from') || '';
+            document.getElementById('subject').value = localStorage.getItem('subject') || '';
+            document.getElementById('orderDetails').value = localStorage.getItem('orderDetails') || '';
+        });
+
+        function nuevoPedido() {
+            document.getElementById('from').value = '';
+            document.getElementById('subject').value = '';
+            document.getElementById('orderDetails').value = '';
+            // Limpiar el almacenamiento local
+            localStorage.removeItem('from');
+            localStorage.removeItem('subject');
+            localStorage.removeItem('orderDetails');
+        }
+
+        function sendMessage() {
+            const from = document.getElementById('from').value;
+            const subject = document.getElementById('subject').value;
+            const orderDetails = document.getElementById('orderDetails').value;
+
+            if (from && subject && orderDetails) {
+                alert('Pedido enviado:\nDe: ' + from + '\nLugar de entrega: ' + subject + '\nDetalles del pedido: ' + orderDetails);
+                var whatsappURL = 'https://api.whatsapp.com/send?text=' + encodeURIComponent('De: ' + from + '\nLugar de entrega: ' + subject + '\nDetalles del pedido: ' + orderDetails);
+                window.open(whatsappURL, '_blank');
+                // Guardar los datos en el almacenamiento local
+                localStorage.setItem('from', from);
+                localStorage.setItem('subject', subject);
+                localStorage.setItem('orderDetails', orderDetails);
+            } else {
+                alert('Por favor, completa todos los campos.');
+            }
+        }
+
+        function updateTime() {
+            var now = new Date();
+            var hours = String(now.getHours()).padStart(2, '0');
+            var minutes = String(now.getMinutes()).padStart(2, '0');
+            var timeString = hours + ':' + minutes;
+            document.getElementById('currentTime').innerText = timeString;
+        }
+
+        setInterval(updateTime, 1000);
+        updateTime();
+    </script>
+</body>
+</html>

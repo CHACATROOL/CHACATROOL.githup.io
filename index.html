@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menú de Comida - T-Eat</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo">
+            <img src="logo.png" alt="Logo">
+        </div>
+        <div class="time" id="currentTime">00:00</div> <!-- Hora -->
+        <ul class="menu">
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="Redes.html">Redes</a></li>
+            <li><a href="mensajes.html">Mensajes</a></li>
+            <li><a href="suscribirse.html">Suscribirse a T-Eat</a></li>
+        </ul>
+    </div>
+
+    <div class="content">
+        <h2>Desayunos de Campeones</h2>
+        <div class="menu-grid">
+            <div class="menu-item" data-cooperativa="Tacos Nico">
+                <img src="tacos-nico.jpg" alt="Tacos Nico">
+                <p>Tacos Nico</p>
+            </div>
+            <div class="menu-item" data-cooperativa="Cafeteria 2">
+                <img src="coop2.jpg" alt="Cafeteria 2">
+                <p>Cafeteria 2</p>
+            </div>
+            <div class="menu-item" data-cooperativa="Guacamovil">
+                <img src="guacamovil.png" alt="Guacamovil">
+                <p>Guacamovil</p>
+            </div>
+            <div class="menu-item" data-cooperativa="El Forastero">
+                <img src="quesadillas.jpg" alt="El Forastero">
+                <p>El Forastero</p>
+            </div>
+            <div class="menu-item" data-cooperativa="Tapanco">
+                <img src="tacos-suaperro.webp" alt="Tapanco">
+                <p>Tapanco</p>
+            </div>
+            <div class="menu-item" data-cooperativa="Cafeteria 1">
+                <img src="la-tia.jpg" alt="Cafeteria 1">
+                <p>Cafeteria 1</p>
+            </div>
+        </div>
+        <div class="menu-details">
+            <h3>*Selecciona una cooperativa para ver el menú</h3>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

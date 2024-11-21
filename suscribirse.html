@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro - T-Eat</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: url('fondo.png') no-repeat center center fixed;
+            background-size: cover;
+            position: relative;
+        }
+        .back-arrow {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 50px;
+            cursor: pointer;
+            color: #fff;
+        }
+        .container {
+            background-color: #000;
+            border-radius: 100px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 400px;
+            padding: 40px;
+            text-align: center;
+            color: #fff;
+        }
+        .header {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .body input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .footer button {
+            background-color: #fff;
+            color: #000;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            margin: 5px 0;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(255, 255, 255, 0.5);
+            justify-content: center;
+            align-items: center;
+            color: #000;
+        }
+        .center-button {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #fff;
+            color: #000;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .modal-content {
+            background-color: #00000;
+            color: #000;
+            padding: 1px;
+            border-radius: 100px;
+            text-align: center;
+        }
+       .modal-content img {
+    width: 700px;   /* Establece un ancho fijo */
+    height: 600px;  /* Establece una altura fija */
+}
+
+    </style>
+</head>
+<body>
+    <div class="back-arrow" onclick="goToMainMenu()">←</div>
+    <div class="container signup-container">
+        <div class="header signup-header">Registro de Nuevo Usuario</div>
+        <p>¿Ya estás registrado? <a href="#" onclick="openLoginModal()" style="color: #fff;">Iniciar sesión</a></p>
+        <div class="body signup-body">
+            <input type="text" placeholder="Nombre" id="name">
+            <input type="email" placeholder="Correo Electrónico" id="email">
+            <input type="password" placeholder="Contraseña" id="password">
+            <input type="password" placeholder="Confirmar Contraseña" id="confirmPassword">
+        </div>
+        <div class="footer signup-footer">
+            <button onclick="registerUser()">Registrarse</button>
+        </div>
+    </div>
+
+    <div id="loginModal" class="modal">
+        <div class="container login-container">
+            <div class="header login-header">Iniciar Sesión</div>
+            <div class="body login-body">
+                <input type="text" placeholder="Nombre de Usuario" id="loginUsername">
+                <input type="password" placeholder="Contraseña" id="loginPassword">
+            </div>
+            <div class="footer login-footer">
+                <button onclick="loginUser()">Iniciar Sesión</button>
+                <button onclick="closeLoginModal()">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="subscriptionModal" class="modal">
+        <div class="container subscription-container">
+            <div class="header subscription-header">Suscribirse</div>
+            <div class="body subscription-body">
+                <input type="text" placeholder="Nombre" id="subscriptionName">
+                <input type="email" placeholder="Correo Electrónico" id="subscriptionEmail">
+                <input type="text" placeholder="Número de Tarjeta de Crédito/Débito" id="cardNumber">
+                <input type="text" placeholder="Fecha de Expiración" id="expiryDate">
+                <input type="text" placeholder="Código de Seguridad" id="securityCode">
+            </div>
+            <div class="footer subscription-footer">
+                <button onclick="subscribeUser()">Suscribirse</button>
+                <button onclick="closeSubscriptionModal()">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="imageModal" class="modal">
+        <div class="modal-content">
+            <span onclick="closeImageModal()" style="cursor: pointer;">&times;</span>
+            <img src="Plan de venta.png" alt="Imagen">
+        </div>
+    </div>
+
+    <button class="center-button" onclick="openImageModal()">CONOCE NUESTRAS MEMBRESIAS</button>
+
+    <script>
+        function openLoginModal() {
+            document.getElementById('loginModal').style.display = 'flex';
+        }
+
+        function closeLoginModal() {
+            document.getElementById('loginModal').style.display = 'none';
+        }
+
+        function registerUser() {
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            if (name && email && password && confirmPassword) {
+                if (password === confirmPassword) {
+                    alert('Usuario registrado:\nNombre: ' + name + '\nCorreo Electrónico: ' + email);
+                    openSubscriptionModal(name, email);
+                } else {
+                    alert('Las contraseñas no coinciden.');
+                }
+            } else {
+                alert('Por favor, completa todos los campos.');
+            }
+        }
+
+        function openSubscriptionModal(name, email) {
+            document.getElementById('subscriptionName').value = name;
+            document.getElementById('subscriptionEmail').value = email;
+            document.getElementById('subscriptionModal').style.display = 'flex';
+        }
+
+        function closeSubscriptionModal() {
+            document.getElementById('subscriptionModal').style.display = 'none';
+        }
+
+        function subscribeUser() {
+            const cardNumber = document.getElementById('cardNumber').value;
+            const expiryDate = document.getElementById('expiryDate').value;
+            const securityCode = document.getElementById('securityCode').value;
+
+            if (cardNumber && expiryDate && securityCode) {
+                alert('Suscripción exitosa');
+                window.location.href = 'index.html';
+            } else {
+                alert('Por favor, completa todos los campos.');
+            }
+        }
+
+        function loginUser() {
+            const username = document.getElementById('loginUsername').value;
+            const password = document.getElementById('loginPassword').value;
+
+            if (username && password) {
+                alert('Inicio de sesión exitoso:\nUsuario: ' + username);
+                closeLoginModal();
+            } else {
+                alert('Por favor, completa todos los campos.');
+            }
+        }
+
+        function goToMainMenu() {
+            window.location.href = 'index.html';
+        }
+
+        function updateTime() {
+            var now = new Date();
+            var hours = String(now.getHours()).padStart(2, '0');
+            var minutes = String(now.getMinutes()).padStart(2, '0');
+            var timeString = hours + ':' + minutes;
+        
+            document.getElementById('currentTime').innerText = timeString;
+        }
+
+        function openImageModal() {
+            document.getElementById('imageModal').style.display = 'flex';
+        }
+
+        function closeImageModal() {
+            document.getElementById('imageModal').style.display = 'none';
+        }
+
+        setInterval(updateTime, 1000);
+        updateTime();
+    </script>
+</body>
+</html>
